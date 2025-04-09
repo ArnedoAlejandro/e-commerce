@@ -18,7 +18,8 @@ const SizeSelector = ({ selectedSize, availableSize}: Props) => {
               key={size}
               className={
                 clsx(
-                  "mx-2 hover:underline text-lg cursor-pointer",{
+                  "mx-2 hover:underline text-lg cursor-pointer",
+                  {
                     "font-bold underline": size === selectedSize
                   }
                 )

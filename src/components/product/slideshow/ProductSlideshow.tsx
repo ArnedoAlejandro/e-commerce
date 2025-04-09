@@ -1,29 +1,76 @@
-"use client"
-import { Swiper, SwiperSlide } from 'swiper/react'
+"use client";
+import { useState } from "react";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperObject } from "swiper";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import "./slideshow.css";
+import Image from "next/image";
 
 interface Props {
-  images : string[];
+  images: string[];
   title: string;
-  className?: string
+  className?: string;
 }
-const ProductSlideshow = ( { images, title, className}: Props) => {
-
+const ProductSlideshow = ({ images, title, className }: Props) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>();
 
   return (
     <div className={className}>
       <Swiper
-      spaceBetween={50}
-      slidesPerView={3}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-    </Swiper>
-  </div>
-  )
-}
+        style={
+          {
+            "--swiper-navigation-color": "#fff",
+            "--swiper-pagination-color": "#fff",
+          } as React.CSSProperties
+        }
+        spaceBetween={10}
+        navigation={true}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
+        modules={[FreeMode, Navigation, Thumbs]}
+        className="mySwiper2"
+      >
+        {images.map((image) => (
+          <SwiperSlide key={image}>
+            <Image
+              width={1024}
+              height={800}
+              alt={title}
+              src={`/products/${image}`}
+              className="rounded-md object-fill "
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-export default ProductSlideshow
+      <Swiper
+        onSwiper={setThumbsSwiper}
+        spaceBetween={10}
+        slidesPerView={4}
+        freeMode={true}
+        watchSlidesProgress={true}
+        modules={[FreeMode, Navigation, Thumbs]}
+        className="mySwiper"
+      >
+        {images.map((image) => (
+          <SwiperSlide key={image}>
+            <Image
+              width={1024}
+              height={800}
+              alt={title}
+              src={`/products/${image}`}
+              className="rounded-md object-fill"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
+};
+
+export default ProductSlideshow;

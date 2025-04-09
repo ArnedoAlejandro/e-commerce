@@ -1,5 +1,6 @@
-import CuantitySelector from "@/components/product/cuantity-selector/CuantitySelector"
+import QuantitySelector from "@/components/product/cuantity-selector/QuantitySelector"
 import SizeSelector from "@/components/product/size-selector/SizeSelector"
+import ProductMobileSlideshow from "@/components/product/slideshow/ProductMobileSlideshow"
 import ProductSlideshow from "@/components/product/slideshow/ProductSlideshow"
 import { titleFont } from "@/config/fonts"
 import { initialData } from "@/seed/seed"
@@ -23,7 +24,11 @@ const ProductSlug = async ({ params }: Props) => {
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
       <div className="col-span-1 md:col-span-2">
-        <ProductSlideshow  title={ product.title} images={product.images}/> 
+      {/* SlideShoe Mobile */}
+      <ProductMobileSlideshow  title={ product.title} images={product.images} className="block md:hidden"/>
+
+      {/* SileShow Descktop */}
+      <ProductSlideshow  title={ product.title} images={product.images} className="hidden md:block"/>  
       </div>
 
       <div className="col-span-1 px-5">
@@ -33,7 +38,7 @@ const ProductSlug = async ({ params }: Props) => {
         <SizeSelector selectedSize={product.sizes[0]} availableSize={product.sizes} />
 
         {/* Selector de cantidad */}
-        <CuantitySelector quantity={2}/>
+        <QuantitySelector quantity={2}/>
 
 
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">

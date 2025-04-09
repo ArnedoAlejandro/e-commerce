@@ -4,8 +4,9 @@ export * from "./products/product-grid/ProductGrid";
 export * from "./products/product-grid/ProductGridItem";
 
 export * from "./product/slideshow/ProductSlideshow";
+export * from "./product/slideshow/ProductMobileSlideshow";
 export * from "./product/size-selector/SizeSelector";
-export * from "./product/cuantity-selector/CuantitySelector";
+export * from "./product/cuantity-selector/QuantitySelector";
 
 
 export * from "./ui/top-menu/TopMenu";
