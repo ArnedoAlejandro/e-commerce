@@ -8,7 +8,7 @@ export * from "./product/slideshow/ProductMobileSlideshow";
 export * from "./product/size-selector/SizeSelector";
 export * from "./product/cuantity-selector/QuantitySelector";
 
-
+export * from "./ui/footer/Footer";
 export * from "./ui/top-menu/TopMenu";
 export * from "./ui/sidebar/Sidebar";
 export * from "./ui/not-found/PageNotFound";

@@ -38,7 +38,7 @@ const Cartpage = () => {
               productInCart.map((product) => (
                 <div
                   key={product.slug}
-                  className="flex  items-center  mt-10  rounded-md "
+                  className="flex  items-center mt-10 rounded-md"
                 >
                   <Image className="mr-5 rounded" src={`/products/${product.images[0]}`} alt={product.title} width={120} height={120} />
                 
@@ -58,8 +58,8 @@ const Cartpage = () => {
           </div>
 
           {/* Resumen */}
-          <div className="p-7 flex flex-col rounded-lg  shadow-xl bg-white/50">
-            <h2 className=" text-center text-xl mb-2 ">Resumen de orden</h2>
+          <div className="p-7 flex flex-col rounded-lg  shadow-xl bg-white/50 h-fit">
+            <h2 className="text-xl mb-2 ">Resumen de orden</h2>
             
             <div className="mt-5 grid grid-cols-2">
               <span>No. Productos</span>

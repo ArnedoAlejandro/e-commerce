@@ -56,7 +56,7 @@ const CheckOutPage = () => {
           </div>
 
           {/* Resumen */}
-          <div className="p-7 flex flex-col rounded-lg  shadow-xl bg-white/50">
+          <div className="p-7 flex flex-col rounded-lg  shadow-xl bg-white/50 h-fit">
             <h2 className=" text-center text-xl mb-2 ">Direccion de entrega</h2>
             <div className="mb-10">
               <p>Nombre</p>
