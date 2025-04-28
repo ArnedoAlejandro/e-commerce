@@ -1,17 +1,17 @@
 export interface Product {
-  // TODO: id:string
-  description: string;
+  id: string;
+  description: string | null;
   images: string[];
   inStock: number;
   price: number;
   sizes: Size[];
   slug: string;
   tags: string[];
-  title: string;
-  type: ValidTypes;
-  gender: Category
+  title: string | null;
+  // type: ValidTypes;
+  gender: Category;
 }
 
-export type Category = 'men'|'women'|'kid'|'unisex';
-export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
-export type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
+export type Category = "men" | "women" | "kid" | "unisex";
+export type Size = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
+export type ValidTypes = "shirts" | "pants" | "hoodies" | "hats";
