@@ -1,8 +1,10 @@
+export const dynamic = "force-dynamic";
+
+import { redirect } from "next/navigation";
 import { getPaginatedProductWithImages } from "@/actions";
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Pagination from "@/components/ui/pagination/Pagination";
 import TitleMenu from "@/components/ui/top-menu/title/TitleMenu";
-import { redirect } from "next/navigation";
 
 
 interface Props {

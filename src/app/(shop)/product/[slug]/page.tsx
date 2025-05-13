@@ -1,6 +1,5 @@
 export const revalidate = 604800
-import QuantitySelector from "@/components/product/cuantity-selector/QuantitySelector"
-import SizeSelector from "@/components/product/size-selector/SizeSelector"
+
 import ProductMobileSlideshow from "@/components/product/slideshow/ProductMobileSlideshow"
 import ProductSlideshow from "@/components/product/slideshow/ProductSlideshow"
 import { getProductBySlug } from "@/actions"
@@ -8,6 +7,7 @@ import { titleFont } from "@/config/fonts"
 import { notFound } from "next/navigation"
 import StockLabel from "@/components/product/stock-label/StockLabel"
 import { Metadata } from "next"
+import AddtoCard from "./ui/AddtoCard"
 
 interface Props {
   params: {
@@ -60,18 +60,10 @@ const ProductSlug = async ({ params }: Props) => {
   
         <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>{product.title}</h1>
         
-        {/* Selector de talle */}
-        <SizeSelector selectedSize={product.sizes[0]} availableSize={product.sizes} />
+        {/* Componente de selector de talle y selector de cantidad */}
+        <AddtoCard product={product} />
 
-        {/* Selector de cantidad */}
-        <QuantitySelector quantity={2}/>
-
-
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
-          Agregar al carrito
-        </button>
-
-        <h3 className="font-bold text-sm">Descripción</h3>
+        <h3 className="font-bold text-sm mt-5">Descripción</h3>
         <p className="font-light">
           {product.description}
         </p>

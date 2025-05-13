@@ -2,11 +2,21 @@
 import Link from 'next/link'
 import { titleFont } from '@/config/fonts'
 import { IoCartOutline, IoSearchOutline } from 'react-icons/io5'
-import { useUIStore } from '@/store'
+import { useCartStore, useUIStore } from '@/store'
+import { useEffect, useState } from 'react'
 
 export const TopMenu = () => {
 
   const openSideMenu = useUIStore( (state) => state.openSideMenu )
+
+  const totalItemsInCart = useCartStore( state => state.getTotalItems() )
+
+  const [ loaded, setLoaded ] = useState(false)
+
+  // UseEffect destinado a errores de Hidratacion
+  useEffect(()=>{
+    setLoaded(true)
+  },[])
 
 
   return (
@@ -38,9 +48,13 @@ export const TopMenu = () => {
           <IoSearchOutline className='w-7 h-7'/>
         </Link>
 
-        <Link href="/cart">
+        <Link 
+          href={(totalItemsInCart === 0 ) && loaded ? "/empty" : "/cart"}>
           <div className='relative'>
-            <span className='absolute text-xs rounded-full px-1 font-bold -top-1 -right-2 bg-gray-900 text-white'>3</span>
+            {/* Si hay elementos en el carrito, muestra el numero de elementos que tiene  */}
+            { (loaded && totalItemsInCart > 0) && (
+              <span className='fade-in absolute text-xs rounded-full px-1 font-bold -top-1 -right-2 bg-gray-900 text-white'>{totalItemsInCart}</span>
+            )}
             <IoCartOutline className='w-7 h-7'/>
           </div>
         </Link>

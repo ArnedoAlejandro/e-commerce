@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import Register from "./ui/Register";
 
 const RegisterUser = () => {
   return (
@@ -16,84 +17,7 @@ const RegisterUser = () => {
             ¡Registrate para comenzar a comprar!
           </p>
 
-          <form className="mt-8 space-y-6">
-            {/* Nombre */}
-            <div className="relative">
-              <input
-                type="text"
-                name="name"
-                placeholder="Nombre"
-                className="peer h-12 w-full rounded border border-gray-300 px-4 text-sm text-gray-800 placeholder-transparent outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
-                required
-              />
-              <label
-                htmlFor="name"
-                className="absolute left-3 -top-2 text-xs text-gray-500 bg-white px-1 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-yellow-500"
-              >
-                Nombre
-              </label>
-            </div>
-
-            {/* Email */}
-            <div className="relative">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="peer h-12 w-full rounded border border-gray-300 px-4 text-sm text-gray-800 placeholder-transparent outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
-                required
-              />
-              <label
-                htmlFor="email"
-                className="absolute left-3 -top-2 text-xs text-gray-500 bg-white px-1 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-yellow-500"
-              >
-                Email
-              </label>
-            </div>
-
-            {/* Contraseña */}
-            <div className="relative">
-              <input
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                className="peer h-12 w-full rounded border border-gray-300 px-4 text-sm text-gray-800 placeholder-transparent outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
-                required
-              />
-              <label
-                htmlFor="password"
-                className="absolute left-3 -top-2 text-xs text-gray-500 bg-white px-1 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-yellow-500"
-              >
-                Contraseña
-              </label>
-            </div>
-
-            {/* Confirmar contraseña */}
-            <div className="relative">
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirmar Contraseña"
-                className="peer h-12 w-full rounded border border-gray-300 px-4 text-sm text-gray-800 placeholder-transparent outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
-                required
-              />
-              <label
-                htmlFor="confirmPassword"
-                className="absolute left-3 -top-2 text-xs text-gray-500 bg-white px-1 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-yellow-500"
-              >
-                Confirmar Contraseña
-              </label>
-            </div>
-
-            {/* Botón de registro */}
-            <div className="flex justify-center">
-              <input
-                type="submit"
-                value="Registrarme"
-                className="cursor-pointer w-full h-12 bg-yellow-500 text-black text-sm font-semibold rounded shadow-md hover:bg-yellow-400 transition duration-300"
-              />
-            </div>
-          </form>
+          <Register />
 
           <div className="mt-4 flex justify-center text-sm text-gray-500">
             ¿Ya tenés cuenta?{" "}

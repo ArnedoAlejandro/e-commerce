@@ -2,12 +2,16 @@ import { Size } from "@/interface"
 import clsx from "clsx"
 
 interface Props {
-  selectedSize: Size
+  selectedSize?: Size
   availableSize : Size[]
+
+  onSizeChange: (size: Size) => void
 }
-const SizeSelector = ({ selectedSize, availableSize}: Props) => {
+
+// TODO: COmponente que se encarga de seleccionar la talla de la prenda
+const SizeSelector = ({ selectedSize, availableSize, onSizeChange }: Props) => {
   return (
-    <div className="my-5 ">
+    <div className="my-2 ">
       <h3 className="font-bold text-sm">Tallas</h3>
 
       <div className="flex gap-2">
@@ -16,6 +20,7 @@ const SizeSelector = ({ selectedSize, availableSize}: Props) => {
           availableSize.map( size => (
             <button 
               key={size}
+              onClick={ ( () => onSizeChange(size) ) }
               className={
                 clsx(
                   "mx-2 hover:underline text-lg cursor-pointer",

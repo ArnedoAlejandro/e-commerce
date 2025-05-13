@@ -1,31 +1,41 @@
 import { prisma } from "../lib/prisma";
 import { initialData } from "./seed";
+import { Category } from "@prisma/client";
 
 async function main() {
   // 1 Borrar registros previos
+  await prisma.user.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
 
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
+
+  // 2 Crear user
+  await prisma.user.createMany({
+    data: users,
+  });
 
   // 2 Crear categorias
   const categoriesData = categories.map((name) => ({
     name,
   }));
 
+  // Designar el id de categoria
+
   await prisma.category.createMany({
     data: categoriesData,
   });
 
-  // Designar el id de categoria
-  const categoriesDb = await prisma.category.findMany();
-  console.log(categoriesDb);
+  const categoriesDB = await prisma.category.findMany();
 
-  const categoriesMap = categoriesDb.reduce((acc, category) => {
-    acc[category.name.toLowerCase()] = category.id;
-    return acc;
-  }, {} as Record<string, string>);
+  const categoriesMap = categoriesDB.reduce(
+    (map: Record<string, string>, category: Category) => {
+      map[category.name.toLowerCase()] = category.id;
+      return map;
+    },
+    {}
+  );
 
   // Crear Productos
 

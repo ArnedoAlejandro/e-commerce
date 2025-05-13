@@ -13,3 +13,5 @@ export * from "./ui/sidebar/Sidebar";
 export * from "./ui/not-found/PageNotFound";
 export * from "./ui/top-menu/title/TitleMenu";
 export * from "./ui/pagination/Pagination";
+
+export * from "./provider/Provider";
