@@ -21,13 +21,14 @@ const AddtoCard = ({ product } : Props) => {
   const addToCart = () =>{
     setPosted(true)
     if(!size)  return
-    console.log({ size, quantity , product })
+  
 
     const cartProduct: CartProduct={
       id: product.id,
       slug: product.slug,
-      title: product.title,
+      title: product.title || "Producto sin título",
       price: product.price,
+      gender: product.gender, 
       size: size,
       image: product.images[0],
       quantity: quantity

@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import { AuthError } from "next-auth";
 import { signIn } from "next-auth/react";

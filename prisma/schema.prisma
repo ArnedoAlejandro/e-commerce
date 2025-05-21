@@ -63,11 +63,49 @@ model ProductImage {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String       @id @default(uuid())
   name          String
-  email         String    @unique
+  email         String       @unique
   emailVerified DateTime?
   password      String
-  role          Role      @default(user)
+  role          Role         @default(user)
   image         String?
+  userAddress   UserAddress?
+}
+
+model Province {
+  id          String        @id // 🔁 quitás @default(uuid()) para poder usar tus códigos
+  name        String        @unique
+  cities      City[]
+  UserAddress UserAddress[]
+}
+
+model City {
+  id          String        @id @default(uuid())
+  name        String
+  province    Province      @relation(fields: [provinceId], references: [id])
+  provinceId  String
+  UserAddress UserAddress[]
+
+  @@unique([name, provinceId])
+}
+
+model UserAddress {
+  id         String @id @default(uuid())
+  firstName  String
+  lastName   String
+  address    String
+  address2   String
+  postalCode String
+  phone      String
+
+  // Relaciones
+  province   Province @relation(fields: [provinceId], references: [id])
+  provinceId String
+
+  city   City   @relation(fields: [cityId], references: [id])
+  cityId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
