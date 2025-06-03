@@ -9,6 +9,9 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
+
+// import ClearAddressStoreButton from "./ClearAddressStoreButton";
 
 interface Props {
   provinces: Province[];
@@ -30,15 +33,7 @@ interface FormInputs {
 }
 const AdressForm = ({ provinces, cities , useStoredAddress = {} }: Props ) => {
 
-  console.log(useStoredAddress)
-  
-  // -4
-  // const { handleSubmit, register, formState: { isValid } , reset } = useForm<FormInputs>({
-  //   defaultValues: {
-  //     ...useStoredAddress,
-  //     rememberAdress: false
-  //   }
-  // })
+  const router = useRouter();
 
   const { handleSubmit, register, formState: { isValid }, reset } = useForm<FormInputs>({
   defaultValues: {
@@ -49,7 +44,7 @@ const AdressForm = ({ provinces, cities , useStoredAddress = {} }: Props ) => {
   const {data: session} = useSession( {required: true} )
   const setAdress = useAdressStore((state) => state.setAdress);
   const adress = useAdressStore((state) => state.adress);
-  console.log("adres localstorage",{adress})
+
 
 
   useEffect(() => {
@@ -66,21 +61,23 @@ const onSubmit = async (data: FormInputs) => {
     return;
   }
 
-  setAdress(data);
-  console.log("data" + {data});
 
+  
   const { rememberAdress, ...restAddress } = data;
+  
+  setAdress(data);
 
   if (rememberAdress) {
     await setUserAddress({
       address: restAddress,
       userId: session!.user.id,
     });
+    router.replace("/checkout");
   }else{
     await deleteUserAddress( session!.user.id );
+    router.replace("/checkout");
   }
 
-  console.log("data" + {data});
 };
 
   return (

@@ -51,6 +51,7 @@ model Product {
   categoryId String
 
   ProductImage ProductImage[]
+  OrderItem    OrderItem[]
 
   @@index([gender])
 }
@@ -71,13 +72,15 @@ model User {
   role          Role         @default(user)
   image         String?
   userAddress   UserAddress?
+  Order         Order[]
 }
 
 model Province {
-  id          String        @id // 🔁 quitás @default(uuid()) para poder usar tus códigos
-  name        String        @unique
-  cities      City[]
-  UserAddress UserAddress[]
+  id           String         @id // 🔁 quitás @default(uuid()) para poder usar tus códigos
+  name         String         @unique
+  cities       City[]
+  UserAddress  UserAddress[]
+  OrderAddress OrderAddress[]
 }
 
 model City {
@@ -108,4 +111,52 @@ model UserAddress {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
+}
+
+// ORDEN DE COMPRAS 
+model Order {
+  id           String    @id @default(uuid())
+  subtotal     Float
+  total        Float
+  itemsInOrder Int
+  isPaid       Boolean
+  delivered    DateTime?
+  paidAt       DateTime?
+
+  createdAt DateTime @default(now())
+  // Cada vez que se actualiza tiene el nuevo valor de la actualizacion 
+  updateAt  DateTime @updatedAt
+
+  // Relaciones
+  user      User        @relation(fields: [userId], references: [id])
+  userId    String
+  OrderItem OrderItem[]
+}
+
+model OrderItem {
+  id       String @id @default(ulid())
+  quantity Int
+  price    Float
+  size     Size
+
+  // Relaciones
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  producto  Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model OrderAddress {
+  is         String  @id @default(uuid())
+  firstName  String
+  lastName   String
+  address    String
+  address2   String?
+  postalCode String
+  phone      String
+  cityId     String
+
+  province   Province @relation(fields: [provinceId], references: [id])
+  provinceId String
 }

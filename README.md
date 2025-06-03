@@ -12,4 +12,6 @@
 
 6.Ejecutar seed => npm run seed
 
-7.Correr proyecto => npm run dev
+7.Limpiar el localStorage del navegador
+
+8.Correr proyecto => npm run dev

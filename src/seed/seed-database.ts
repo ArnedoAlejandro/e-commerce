@@ -9,6 +9,7 @@ async function main() {
   await prisma.category.deleteMany();
   await prisma.city.deleteMany(); // ✅ Borrar ciudades antes de provincias
   await prisma.province.deleteMany(); // ✅ Borrar provincias
+  await prisma.userAddress.deleteMany();
   await prisma.user.deleteMany();
 
   const { categories, products, users } = initialData;

@@ -1,9 +1,9 @@
 
 import TitleMenu from '@/components/ui/top-menu/title/TitleMenu';
-import AdressForm from './ui/AdressForm';
 
 import { getCities, getProvinces, getUserAddress } from '@/actions';
 import { auth } from '@/auth.config';
+import AdressForm from './ui/AdressForm';
 
 export default async  function  AddressPage () {
 
