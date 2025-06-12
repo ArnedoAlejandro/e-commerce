@@ -1,14 +1,15 @@
 
+
 import TitleMenu from '@/components/ui/top-menu/title/TitleMenu';
 
-import { getCities, getProvinces, getUserAddress } from '@/actions';
+import { getProvinces, getUserAddress } from '@/actions';
 import { auth } from '@/auth.config';
 import AdressForm from './ui/AdressForm';
 
 export default async  function  AddressPage () {
 
   const provinces =  (await getProvinces()) ?? [];
-  const cities = await getCities();  
+  // const cities = await getCities();  
 
   const user = await auth();
 
@@ -18,9 +19,10 @@ export default async  function  AddressPage () {
 
 
   const userAddress = await  getUserAddress(user.user.id);
-  
 
-
+  if(userAddress) {
+    console.log(userAddress)
+  }
 
   return (
     <div className="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-10 bg-gray-50 min-h-screen">
@@ -28,7 +30,7 @@ export default async  function  AddressPage () {
 
         <TitleMenu title="Dirección" subtitle="Dirección de entrega" />
 
-        <AdressForm  provinces={provinces}  cities={ cities} useStoredAddress={userAddress ?? undefined} />
+        <AdressForm  provinces={provinces}  useStoredAddress={userAddress ?? undefined} />
       </div>
     </div>
   );

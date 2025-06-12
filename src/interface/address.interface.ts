@@ -4,7 +4,7 @@ export interface Address {
   lastName: string;
   address: string;
   address2?: string;
-  cityId: string; // ✅ reemplaza a `city`
+  city: string; // ✅ reemplaza a `city`
   provinceId: string; // ✅ reemplaza a `province`
   postalCode: string;
   phone: string;

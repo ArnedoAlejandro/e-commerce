@@ -1,7 +1,7 @@
-export interface City {
-  id: string;
-  name: string;
-  provinceId: string;
-}
+// export interface City {
+//   id: string;
+//   name: string;
+//   provinceId: string;
+// }
 
-export default City;
+// export default City;

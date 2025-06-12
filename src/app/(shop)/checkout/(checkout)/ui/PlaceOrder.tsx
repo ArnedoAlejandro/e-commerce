@@ -1,15 +1,20 @@
 "use client";
 import { useAdressStore, useCartStore } from "@/store";
+import { placeOrder } from "@/actions";
 import { currencyFormat } from "@/utils";
-import clsx from "clsx";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const PlaceOrder = () => {
+
+  const router = useRouter()
   const [loaded, setLoaded] = useState(false);
   const [ isPlacingOrder, setIsPlacingOrder ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState('');
 
   const addres = useAdressStore((state) => state.adress);
   const cart = useCartStore((state) => state.cart);
+  const clearCart = useCartStore((state) => state.clearCart);
   
 
 
@@ -30,18 +35,30 @@ const PlaceOrder = () => {
   }, []);
 
   const onPlaceOrder = async() => {
+    // console.log(addres)
     setIsPlacingOrder(true);
-    const productStore = cart.map((product) => ({
-      id: product.id,
+    const productToOrder = cart.map((product) => ({
+      productId: product.id,
       quantity: product.quantity,
       size: product.size
     }))
+    // Destructuramos la propiedad de rememberAdress para que nos retorne un objeto sin esa propiedad de addres
+    const { rememberAdress, ...addressWithoutRemember } = addres;
+ 
+    // Ejecutamos la funcion placeOrder para enviar a nuestro servidor la direccion y el pedido 
+    const resp = await placeOrder(productToOrder, addressWithoutRemember);
+    if(!resp.ok) {
+        setIsPlacingOrder(false);
+        setErrorMessage(resp.message);
+        return
+      }
 
-    const { rememberAdress, ...restAddress } = addres;
-    console.log(restAddress);
-    console.log(productStore)
+      // Todo salio bien 
+      clearCart();
+      router.replace("/orders/" + resp.order!.id);
+    
 
-    setIsPlacingOrder(false);
+      
   }
 
   if (!loaded) return <p>Cargando...</p>;
@@ -49,21 +66,19 @@ const PlaceOrder = () => {
   return (
     <div className="p-7 flex flex-col rounded-lg  shadow-xl bg-white/50 h-fit">
       <h2 className=" text-center text-xl mb-2 ">Direccion de entrega</h2>
-      <div className="mb-10">
-        <p>Nombre </p>
-        <p>
-          {addres.firstName} {addres.lastName}
-        </p>
-        <p>Direccion:</p>
-        <p>{addres.address}</p>
-        <p>Ciudad</p>
-        <p> {addres.cityId}</p>
-        <p>Provincia</p>
-        <p>{addres.provinceId}</p>
-        <p>Codigo postal </p>
-        <p>{addres.postalCode}</p>
-        <p>Telefono</p>
-        <p>{addres.phone}</p>
+      <div className="mb-10 flex flex-col gap-2">
+        <p>Nombre: {addres.firstName} {addres.lastName} </p>
+        
+        <p>Direccion: {addres.address}</p>
+        
+        <p>Telefono: {addres.phone}</p>
+        
+        <p>Ciudad: {addres.city}</p>
+        
+        <p>Provincia: {addres.provinceId}</p>
+      
+        <p>Codigo postal: {addres.postalCode}</p>
+        
       </div>
 
       <div className="w-full h-0.5 bg-gray-400 rounded mb-10" />
@@ -85,7 +100,7 @@ const PlaceOrder = () => {
         </span>
 
       </div>
-        {/* <p className="text-red-600 text-center mt-5">Error de creación de orden</p> */}
+        <p className="text-red-600 text-center mt-5">{errorMessage}</p>
         <button
         onClick={onPlaceOrder}
           // href="/orders/123"

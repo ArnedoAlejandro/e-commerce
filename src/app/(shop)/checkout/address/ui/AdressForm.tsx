@@ -2,7 +2,6 @@
 
 import { deleteUserAddress, setUserAddress } from "@/actions";
 import { Address } from "@/interface";
-import City from "@/interface/city.interface";
 import Province from "@/interface/providence.interface";
 import { useAdressStore } from "@/store";
 import { useSession } from "next-auth/react";
@@ -11,11 +10,8 @@ import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
-// import ClearAddressStoreButton from "./ClearAddressStoreButton";
-
 interface Props {
   provinces: Province[];
-  cities: City[];
   useStoredAddress?: Partial<Address> 
 }
 
@@ -25,13 +21,13 @@ interface FormInputs {
   lastName: string;
   address: string;     
   address2?: string;   
-  cityId: string;
+  city: string;
   provinceId: string;
   postalCode: string;
   phone: string;
   rememberAdress: boolean;
 }
-const AdressForm = ({ provinces, cities , useStoredAddress = {} }: Props ) => {
+const AdressForm = ({ provinces, useStoredAddress = {} }: Props ) => {
 
   const router = useRouter();
 
@@ -66,6 +62,7 @@ const onSubmit = async (data: FormInputs) => {
   const { rememberAdress, ...restAddress } = data;
   
   setAdress(data);
+  
 
   if (rememberAdress) {
     await setUserAddress({
@@ -146,17 +143,10 @@ const onSubmit = async (data: FormInputs) => {
         <label className="text-sm font-semibold text-gray-700 mb-2">
           Ciudad
         </label>
-        <select
-          className="p-3 border border-gray-300 rounded-xl bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-          {...register("cityId" , { required: true })}
-        >
-          <option value="">Seleccione una opción</option>
-          {cities.map((city) => (
-            <option key={city.id} value={city.id}>
-              {city.name}
-            </option>
-          ))}
-        </select>
+        <input
+            type="text"
+            className="p-3 border border-gray-300 rounded-xl bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"   {...register("city" , { required: true })}
+          />
       </div>
 
     

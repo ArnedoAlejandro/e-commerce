@@ -49,7 +49,7 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
       lastName: address.lastName,
       address: address.address,
       address2: address.address2 ?? "",
-      cityId: address.cityId,
+      city: address.city,
       provinceId: address.provinceId,
       postalCode: address.postalCode,
       phone: address.phone,
@@ -73,53 +73,3 @@ const createOrReplaceAddress = async (address: Address, userId: string) => {
     throw new Error("Error al guardar la dirección");
   }
 };
-// const createOrReplaceAddress = async (address: Address, userId: string) => {
-//   try {
-//     console.log({ userId });
-//     const storedAddress = await prisma.userAddress.findUnique({
-//       where: {
-//         userId,
-//       },
-//     });
-
-//     const addressToSave = {
-//       userId,
-//       firstName: address.firstName,
-//       lastName: address.lastName,
-//       address: address.address,
-//       address2: address.address2 ?? "",
-//       cityId: address.city,
-//       provinceId: address.province,
-//       postalCode: address.postalCode,
-//       phone: address.phone,
-//     };
-
-//     if (!storedAddress) {
-//       const newAddress = await prisma.userAddress.create({
-//         data: addressToSave,
-//       });
-//       return newAddress;
-//     }
-
-//     const updatedAddress = await prisma.userAddress.update({
-//       where: { userId },
-//       data: addressToSave,
-//     });
-
-//     return updatedAddress;
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error("Error al guardar la dirección");
-//   }
-// };
-// export const deleteUserAddress = async ({ userId }: { userId: string }) => {
-//   try {
-//     const deletedAddress = await prisma.userAddress.delete({
-//       where: { userId },
-//     });
-//     return deletedAddress;
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error("Error al eliminar la dirección");
-//   }
-// };

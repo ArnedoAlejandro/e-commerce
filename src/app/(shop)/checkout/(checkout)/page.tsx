@@ -33,28 +33,6 @@ const CheckOutPage = () => {
               Editar carrito
             </Link>
 
-            {/* Item */}
-            {/* {productInCart.map((product) => (
-              <div
-                key={product.slug}
-                className="flex  items-center  mt-10  rounded-md "
-              >
-                <Image
-                  className="mr-5 rounded"
-                  src={`/products/${product.images[0]}`}
-                  alt={product.title}
-                  width={120}
-                  height={120}
-                />
-
-                <div>
-                  <p>{product.title}</p>
-
-                  <p>${product.price} x3 </p>
-                  <p className="font-bold">Subtotal: ${product.price * 3}</p>
-                </div>
-              </div>
-            ))} */}
             <ProductInCart />
           </div>
 

@@ -18,7 +18,7 @@ export const useAdressStore = create<State>()(
         address: "",
         address2: "",
         provinceId: "",
-        cityId: "",
+        city: "",
         postalCode: "",
         phone: "",
       },

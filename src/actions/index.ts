@@ -12,3 +12,7 @@ export * from "./province/get-provinces";
 export * from "./adress/set-user-address";
 export * from "./adress/get-user-address";
 export * from "./adress/delete-user-address";
+
+export * from "./order/place-order";
+export * from "./order/get-order-by-id";
+export * from "./order/get-order-by-user";

@@ -24,7 +24,7 @@ const Sidebar = () => {
   const closeMenu = useUIStore((state) => state.closeSideMenu);
 
   const { data: sesion } = useSession();
-  console.log(sesion?.user.role);
+
 
   const { data: session } = useSession();
 
@@ -87,7 +87,7 @@ const Sidebar = () => {
             </Link>
 
             <Link
-              href={"/cart"}
+              href={"/orders"}
               onClick={() => closeMenu()}
               className="flex items-center mt-10 p-2 rounded-md hover:bg-gray-200 transition-all duration-300"
             >
