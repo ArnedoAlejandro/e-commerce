@@ -11,7 +11,7 @@ const TitleMenu = ({ title, subtitle, className }: Props) => {
   return (
     <div className={className}>
 
-      <h1 className={`${titleFont.className} text-3xl font-extrabold max-md:px-2 max-md:text-center`}>
+      <h1 className={`${titleFont.className} mt-6 text-3xl font-extrabold max-md:px-2 max-md:text-center`}>
         {title}
       </h1>
 

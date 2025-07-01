@@ -1,6 +1,7 @@
 export * from "./products/product-pagination";
 export * from "./products/get-product-by-slug";
 export * from "./products/get-stock-by-slug";
+export * from "./products/create-update-product";
 
 export * from "./auth/login";
 export * from "./auth/logout";
@@ -16,3 +17,11 @@ export * from "./adress/delete-user-address";
 export * from "./order/place-order";
 export * from "./order/get-order-by-id";
 export * from "./order/get-order-by-user";
+export * from "./order/get-paginated-orders";
+export * from "./order/get-order-by-name";
+
+export * from "./users/get-pagination-user";
+export * from "./users/get-user-by-name";
+export * from "./users/change-user-role";
+
+export * from "./categories/get-Categories";

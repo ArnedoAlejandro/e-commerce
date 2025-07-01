@@ -14,4 +14,6 @@ export * from "./ui/not-found/PageNotFound";
 export * from "./ui/top-menu/title/TitleMenu";
 export * from "./ui/pagination/Pagination";
 
+export * from "./users/SearchUserByName";
+
 export * from "./provider/Provider";

@@ -49,7 +49,7 @@ const Pagination = ({ totalPages }: Props) => {
           <ul className="flex list-style-none items-center  ">
             <li className="page-item disabled">
               <Link
-                className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                className="page-link relative block py-1.5 px-3  border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
                 href={createPageUrl(currentPage - 1)}
                 aria-disabled="true"
               >
@@ -61,7 +61,7 @@ const Pagination = ({ totalPages }: Props) => {
                 <Link
                   className={
                     clsx(
-                      "page-link relative block py-1.5 px-3 rounded border-0  outline-none transition-all duration-300 rounded text-gray-800 hover:font-semibold hover:text-gray-800   focus:shadow-none"
+                      "page-link relative block py-1.5 px-3  border-0  outline-none transition-all duration-300  text-gray-800 hover:font-semibold hover:text-gray-800   focus:shadow-none"
                       ,
                       {
                         "bg-black/90 text-white shadow-md hover:bg-black/70 hover:text-white": page === currentPage
@@ -77,7 +77,7 @@ const Pagination = ({ totalPages }: Props) => {
 
             <li className="page-item">
               <Link
-                className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                className="page-link relative block py-1.5 px-3  border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
                 href={createPageUrl(currentPage + 1)}
               >
                 <IoChevronForwardOutline size={30} />

@@ -18,7 +18,7 @@ import {
 // import { auth } from "@/auth.config";
 
 const Sidebar = () => {
-  // const sesion = await auth();
+
 
   const isSideOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSideMenu);
@@ -123,7 +123,7 @@ const Sidebar = () => {
             <div className="w-full h-px bg-gray-300 my-10" />
 
             <Link
-              href={"/"}
+              href={"/admin/products"}
               onClick={() => closeMenu()}
               className="flex items-center mt-10 p-2 rounded-md hover:bg-gray-200 transition-all duration-300"
             >
@@ -132,7 +132,7 @@ const Sidebar = () => {
             </Link>
 
             <Link
-              href={"/orders"}
+              href={"/admin/orders"}
               onClick={() => closeMenu()}
               className="flex items-center mt-10 p-2 rounded-md hover:bg-gray-200 transition-all duration-300"
             >
@@ -141,7 +141,7 @@ const Sidebar = () => {
             </Link>
 
             <Link
-              href={"/"}
+              href={"/admin/users"}
               onClick={() => closeMenu()}
               className="flex items-center mt-10 p-2 rounded-md hover:bg-gray-200 transition-all duration-300"
             >

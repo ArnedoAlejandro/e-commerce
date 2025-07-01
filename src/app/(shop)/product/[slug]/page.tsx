@@ -9,21 +9,14 @@ import StockLabel from "@/components/product/stock-label/StockLabel"
 import { Metadata } from "next"
 import AddtoCard from "./ui/AddtoCard"
 
-interface Props {
-  params: {
-    slug: string
-  }
-}
 
-export async function generateMetadata(
-  { params} : Props,
-  // parent: ResolvingMetadata
-): Promise<Metadata> {
-  // read route params
-  const  slug  = params.slug 
-  // fetch data
-  const product = await getProductBySlug(slug)
-
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
 
   return {
     title: product?.title ?? "Producto sin título",
@@ -31,20 +24,20 @@ export async function generateMetadata(
     openGraph: {
       title: product?.title ?? "Producto sin título",
       description: product?.description ?? "Descripción del producto",
-      images: [ `/products/${product?.images[1]}` ]
+      images: [`/products/${product?.images[1]}`],
     },
-  }
+  };
 }
 
-const ProductSlug = async ({ params }: Props) => {
+export default async function ProductSlug({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
+  const product = await getProductBySlug(slug);
 
-  const product = await getProductBySlug(slug)
-
-  if (!product) {
-    notFound()
-  }
-
+  if (!product) notFound();
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
       <div className="col-span-1 md:col-span-2">
@@ -72,4 +65,3 @@ const ProductSlug = async ({ params }: Props) => {
   )
 }
 
-export default ProductSlug
