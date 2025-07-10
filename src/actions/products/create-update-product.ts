@@ -1,5 +1,7 @@
 "use server";
-import { Gender } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { Gender, Product, Size } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const productSchema = z.object({
@@ -33,9 +35,63 @@ export const createUpdateProduct = async (formData: FormData) => {
     };
   }
 
-  console.log(productParsed);
+  const product = productParsed.data;
+  product.slug = product.slug.toLowerCase().replace(/ /g, "-").trim();
 
-  return {
-    ok: true,
-  };
+  const { id, ...rest } = product;
+
+  try {
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      let product: Product;
+      const tagsArray = rest.tags
+        .split(",")
+        .map((tag) => tag.trim().toLowerCase());
+
+      if (id) {
+        product = await prisma.product.update({
+          where: { id },
+          data: {
+            ...rest,
+            sizes: {
+              set: rest.sizes as Size[],
+            },
+            tags: {
+              set: tagsArray,
+            },
+          },
+        });
+      } else {
+        const product = await prisma.product.create({
+          data: {
+            ...rest,
+            sizes: {
+              set: rest.sizes as Size[],
+            },
+            tags: {
+              set: tagsArray,
+            },
+          },
+        });
+
+        return {
+          product,
+        };
+      }
+    });
+
+    revalidatePath("/admin/products");
+    revalidatePath(`/admin/products/${product.slug}`);
+    revalidatePath(`/products/${product.slug}`);
+
+    return {
+      ok: true,
+      product: prismaTx?.product,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: "Revisar los logs, no se pudo crear / actualizar el p",
+    };
+  }
 };

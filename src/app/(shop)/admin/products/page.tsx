@@ -4,8 +4,8 @@ import TitleMenu from "@/components/ui/top-menu/title/TitleMenu";
 import SearchOrderByName from "@/components/orders/SearchOrderByName";
 import {  getPaginatedProductWithImages } from "@/actions";
 import Pagination from "@/components/ui/pagination/Pagination";
-import Image from "next/image";
 import { currencyFormat } from "@/utils";
+import ProductImage from "@/components/product/product-image/ProductImage";
 
 
 interface Props {
@@ -24,16 +24,15 @@ export default async function ProductsPagePage({
     const {products, totalPage} = await getPaginatedProductWithImages({page})
 
 
-
   return (
     <>
+    
       <div className=" mt-5">
-        <TitleMenu title="Mantenimiento de productos" />
-        
+        <TitleMenu title="Mantenimiento de productos" />       
       </div>
 
       <div className="w-full  flex gap-9 justify-end mt-6  max-md:flex-col-reverse">
-        <Link className="text-center p-2 bg-black/80 text-white rounded hover:bg-black/60 cursor-pointer max-md:m-auto max-md:w-8/12" href="/admin/produc/new">Nuevo producto</Link>
+        <Link className="text-center p-2 bg-black/80 text-white rounded hover:bg-black/60 cursor-pointer max-md:m-auto max-md:w-8/12" href={"/admin/product/new"}>Nuevo producto</Link>
 
         <SearchOrderByName />
       </div>
@@ -55,7 +54,7 @@ export default async function ProductsPagePage({
               <tr key={product.id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   <Link href={`/product/${product.slug}`}>
-                    <Image  className="w-20 h-20 object-cover rounded" src={`/products/${product.ProductImage[0].url}`} height={80} width={80} alt={product.title}/> 
+                    <ProductImage src={product.ProductImage[0]?.url} alt={product?.title} width={80} height={80} />
                   </Link>
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6  whitespace-nowrap">

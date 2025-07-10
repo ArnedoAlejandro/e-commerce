@@ -62,7 +62,7 @@ const AddtoCard = ({ product } : Props) => {
     
       <button 
         onClick={ addToCart }
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+        className="bg-black/80 hover:bg-black/60 cursor-pointer text-white font-bold py-2 px-4 rounded mt-5">
         Agregar al carrito
       </button>
           

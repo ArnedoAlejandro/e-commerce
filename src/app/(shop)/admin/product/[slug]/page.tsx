@@ -22,7 +22,7 @@ const ProductPage = async ({params}:Props) => {
   
   
 
-  if(!product){
+  if(!product && slug !== "new"){
     redirect("/admin/products")
   }
 
@@ -33,7 +33,7 @@ const ProductPage = async ({params}:Props) => {
     <div>
       <TitleMenu title={title} />
 
-      <ProductForm product={product} categories={categories} />
+      <ProductForm product={product ?? {}} categories={categories} />
     </div>
   )
 }

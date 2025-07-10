@@ -35,17 +35,31 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image}>
+        {
+          images.length ===  0 
+          ? 
+          <SwiperSlide>
             <Image
               width={1024}
               height={800}
               alt={title}
-              src={`/products/${image}`}
-              className="rounded-md object-fill "
+              src={`/imgs/placeholder.jpg`}
+              className="rounded-md object-fill"
             />
-          </SwiperSlide>
-        ))}
+          </SwiperSlide> 
+          : 
+          images.map((image) => (
+            <SwiperSlide key={image}>
+              <Image
+                width={1024}
+                height={800}
+                alt={title}
+                src={`/products/${image}`} 
+                className="rounded-md object-fill"
+              />
+            </SwiperSlide>
+          ))
+        }
       </Swiper>
 
       <Swiper
@@ -57,7 +71,20 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper"
       >
-        {images.map((image) => (
+        {
+          images.length === 0 
+          ?
+          <SwiperSlide>
+            <Image
+              width={1024}
+              height={800}
+              alt={title}
+              src={`/imgs/placeholder.jpg`}
+              className="rounded-md object-fill"
+            />
+          </SwiperSlide> 
+          :
+          images.map((image) => (
           <SwiperSlide key={image}>
             <Image
               width={1024}
@@ -67,10 +94,12 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
               className="rounded-md object-fill"
             />
           </SwiperSlide>
-        ))}
+        ))
+        }
+        
       </Swiper>
     </div>
-  );
+  )
 };
 
 export default ProductSlideshow;

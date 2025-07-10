@@ -5,11 +5,13 @@ import {   Product, ProductImage } from "@/interface";
 import { Category } from "@/interface/category.interface";
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
-  product: Product & { ProductImage? : ProductImage[]};
+  product: Partial<Product> & { ProductImage? : ProductImage[]};
   categories: Category[]
 }
 
@@ -30,26 +32,31 @@ const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const ProductForm = ({ product, categories}: Props) => {
 
-  const {
-    handleSubmit,
-    register,
-    formState: { isValid },
-    getValues,
-    setValue,
-    watch
-  } = useForm<FormInputs>({
-    defaultValues: {
-      title: product.title ?? "",
-      slug: product.slug ?? "",
-      description: product.description ?? "",
-      price: product.price,
-      inStock: product.inStock,
-      tags: product.tags.join(", "),
-      sizes: product.sizes ?? [],
-      gender: product.gender as FormInputs["gender"],
-      categoryId: (product as any).categoryId ?? "",
-  }
-  })
+  const router = useRouter()
+
+  const getNormalizedDefaultValues = (product: Partial<Product> & { categoryId?: string }): FormInputs => ({
+  title: product.title ?? "",
+  slug: product.slug ?? "",
+  description: product.description ?? "",
+  price: product.price ?? 0,
+  inStock: product.inStock ?? 0,
+  sizes: product.sizes ?? [],
+  tags: product.tags?.join(", ") ?? "",
+  gender: (typeof product.gender === "string" ? product.gender : "unisex") as FormInputs["gender"],
+  categoryId: product.categoryId ?? "",
+});
+
+const {
+  handleSubmit,
+  register,
+  formState: { isValid },
+  getValues,
+  setValue,
+  watch
+} = useForm<FormInputs>({
+  defaultValues: getNormalizedDefaultValues(product)
+});
+
 
   // TODO: Observa si los sizes cambian de estado, y si cambia se renderiza el componente
   watch("sizes")
@@ -71,28 +78,52 @@ const onSubmit = async (data: FormInputs) => {
 
   const productToSave = { ...data };
 
+  // ✅ Solo se agrega el id si es un producto existente (modo edición)
   if (productToSave.id) {
     formData.append("id", productToSave.id);
   }
 
+  // 🧾 Agregamos todos los campos necesarios al FormData
   formData.append("title", productToSave.title);
   formData.append("slug", productToSave.slug);
   formData.append("description", productToSave.description);
   formData.append("price", productToSave.price.toString());
   formData.append("inStock", productToSave.inStock.toString());
-  formData.append("sizes", productToSave.sizes.toString()); // 👈 también corregiremos esto más abajo
+  formData.append("sizes", productToSave.sizes.join(",")); // ✅ Join correcto
   formData.append("tags", productToSave.tags);
   formData.append("categoryId", productToSave.categoryId);
   formData.append("gender", productToSave.gender);
 
-  const { ok } = await createUpdateProduct(formData);
-  console.log({ ok });
+  // ✅ Llamamos a la función de creación/actualización
+  const { ok, product: updatedProduct } = await createUpdateProduct(formData);
+
+  // ❌ Si falla, informamos
+  if (!ok) {
+    toast.error("Ocurrio un problema")
+    return;
+  }
+
+  toast.success("Producto guardado con éxito")
+
+  setTimeout(() => {
+    router.replace(`/admin/product/${updatedProduct?.slug}`);
+  }, 1500);
 };
 
   
   return (
+  <>
+    <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        pauseOnFocusLoss
+        theme="light"
+      />
     <form onSubmit={handleSubmit(onSubmit)}  className="mt-6 grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-6">
-      {/* Textos */}
       <div className="w-full space-y-6">
         {/* Título */}
         <div className="relative">
@@ -215,6 +246,20 @@ const onSubmit = async (data: FormInputs) => {
 
       {/* Selector de tallas y fotos */}
       <div className="w-full space-y-6">
+              <div className="relative">
+          <input
+            type="number"
+            id="inStock"
+            placeholder=" "
+            className="peer w-full border border-gray-300 bg-white rounded-md px-4 pt-5 pb-2 text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" {...register("inStock", {required:true, min:0})}
+          />
+          <label
+            htmlFor="inStock"
+            className="absolute left-3 -top-2.5 bg-white px-1 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-500 peer-focus:bg-white"
+          >
+            Stock
+          </label>
+        </div>
         <div>
           <label className="block text-sm font-medium mb-2 text-gray-700">Tallas</label>
           <div className="flex flex-wrap gap-2">
@@ -266,5 +311,6 @@ const onSubmit = async (data: FormInputs) => {
       </div>
       </div>
     </form>
+  </>
   );
 };
