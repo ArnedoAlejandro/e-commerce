@@ -25,16 +25,23 @@ interface FormInputs {
   sizes: string[];
   tags: string;
   gender: "men" | "women" | "kid" | "unisex";
-  categoryId: string
+  categoryId: string,
+  images?: FileList
+}
+
+interface ExtendedProduct extends Partial<Product> {
+  categoryId?: string;
 }
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+
 
 export const ProductForm = ({ product, categories}: Props) => {
 
   const router = useRouter()
 
-  const getNormalizedDefaultValues = (product: Partial<Product> & { categoryId?: string }): FormInputs => ({
+const getNormalizedDefaultValues = (product: ExtendedProduct): FormInputs => ({
+  id: product.id ?? "",
   title: product.title ?? "",
   slug: product.slug ?? "",
   description: product.description ?? "",
@@ -43,7 +50,8 @@ export const ProductForm = ({ product, categories}: Props) => {
   sizes: product.sizes ?? [],
   tags: product.tags?.join(", ") ?? "",
   gender: (typeof product.gender === "string" ? product.gender : "unisex") as FormInputs["gender"],
-  categoryId: product.categoryId ?? "",
+  categoryId: product.categoryId ?? "", // ya no da error
+  images: undefined
 });
 
 const {
@@ -78,10 +86,12 @@ const onSubmit = async (data: FormInputs) => {
 
   const productToSave = { ...data };
 
-  // ✅ Solo se agrega el id si es un producto existente (modo edición)
-  if (productToSave.id) {
-    formData.append("id", productToSave.id);
-  }
+
+  // // ✅ Solo se agrega el id si es un producto existente (modo edición)
+if (productToSave.id && productToSave.id !== "") {
+  formData.append("id", productToSave.id);
+}
+
 
   // 🧾 Agregamos todos los campos necesarios al FormData
   formData.append("title", productToSave.title);
@@ -94,6 +104,12 @@ const onSubmit = async (data: FormInputs) => {
   formData.append("categoryId", productToSave.categoryId);
   formData.append("gender", productToSave.gender);
 
+
+  if( productToSave.images){
+    for( let i = 0 ; i < productToSave.images.length;  i++){
+      formData.append("images", productToSave.images[i])
+    }
+  }
   // ✅ Llamamos a la función de creación/actualización
   const { ok, product: updatedProduct } = await createUpdateProduct(formData);
 
@@ -288,11 +304,13 @@ const onSubmit = async (data: FormInputs) => {
           </label>
           <input
             type="file"
+            {...register("images")}
             id="images"
             multiple
             className="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            accept="image/png, image/jpeg"
+            accept="image/png, image/jpeg, image/avif, image/webp image/jpg, "
           />
+          <span className="text-xs text-gray-400">Imagen  con formato png, jpeg o jpg</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">

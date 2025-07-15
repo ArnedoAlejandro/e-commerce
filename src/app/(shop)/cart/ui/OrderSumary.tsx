@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/store";
-import { currencyFormat } from '../../../../utils/currencyFormat';
+import { currencyFormat } from "../../../../utils/currencyFormat";
 
 const OrderSumary = () => {
   const [loaded, setLoaded] = useState(false);
@@ -10,14 +10,15 @@ const OrderSumary = () => {
 
   const { subTotal, total, itemsInCart } = (() => {
     const subTotal = cart.reduce(
-      (subTotal, product) => product.quantity * product.price + subTotal,
+      (subTotal, product) => subTotal + product.quantity * product.price,
       0
     );
+
     const total = subTotal;
     const itemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
     return { subTotal, total, itemsInCart };
-  })(); 
+  })();
 
   useEffect(() => {
     setLoaded(true);

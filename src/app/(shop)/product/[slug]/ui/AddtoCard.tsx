@@ -4,6 +4,8 @@ import { CartProduct, Product, Size } from '@/interface';
 import QuantitySelector from '@/components/product/cuantity-selector/QuantitySelector';
 import SizeSelector from '@/components/product/size-selector/SizeSelector';
 import { useCartStore } from '@/store';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";   
 
 interface Props {
   product: Product
@@ -37,7 +39,7 @@ const AddtoCard = ({ product } : Props) => {
 
     addProductToCart(cartProduct)
     
-
+    toast.success("Producto agregado")
 
     setPosted(false)
     setSize(undefined)
@@ -48,6 +50,17 @@ const AddtoCard = ({ product } : Props) => {
 
   return (
     <>
+      <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              pauseOnFocusLoss
+              theme="light"
+            />
+
       {/* Mensaje de rror en caso que no tengal un size seleccionado */}
       {
         posted && !size && <span className="mt-4  text-red-700  fade-in" role="alert">Debes seleccionar una talla*</span>
