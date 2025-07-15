@@ -1,17 +1,17 @@
 "use client";
 
-import { createUpdateProduct } from "@/actions";
-import {   Product, ProductImage } from "@/interface";
+import { createUpdateProduct, deleteProductImage } from "@/actions";
+import ProductImage from "@/components/product/product-image/ProductImage";
+import {   Product, ProductImage  as ProductWhithImage} from "@/interface";
 import { Category } from "@/interface/category.interface";
 import clsx from "clsx";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
-  product: Partial<Product> & { ProductImage? : ProductImage[]};
+  product: Partial<Product> & { ProductImage? : ProductWhithImage[]};
   categories: Category[]
 }
 
@@ -317,11 +317,11 @@ if (productToSave.id && productToSave.id !== "") {
           {
             product.ProductImage?.map((image)=>(
               <div key={image.id}>
-                <Image className="rounded-t-md shadow" width={250} height={250} src={`/products/${image.url}`} alt={product.title ?? ""} />
+                <ProductImage className="rounded-t-md shadow" width={250} height={250} src={image.url} alt={product.title ?? ""} />
       
               <button 
                 type="button"
-                onClick={()=>console.log(image.id, image.url)}
+                onClick={()=>deleteProductImage(image.id, image.url)}
                 className="bg-red-400 w-full rounded-b-md py-2 hover:bg-red-500 " >Eliminar</button>
               </div>
             ))

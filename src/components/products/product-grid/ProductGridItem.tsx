@@ -9,7 +9,7 @@ interface Props {
 }
 const ProductGridItem = ({ product }: Props) => {
   const [displayImage, setDisplayImage] = useState(product.images[0]);
-
+  
   const mouseEnter = () => {
     setDisplayImage(product.images[1]);
   };
@@ -22,7 +22,13 @@ const ProductGridItem = ({ product }: Props) => {
     <div className="rounded-md overflow-hidden fade-id ">
       <Link href={`/product/${product.slug}`}>
         <Image
-          src={ displayImage ? `/products/${displayImage}` : "/imgs/placeholder.jpg"}
+          src={
+            displayImage
+              ? displayImage.startsWith("http")
+                ? displayImage
+                : `/products/${displayImage}`
+              : "/imgs/placeholder.jpg"
+          }
           alt={product.title || ""}
           width={500}
           height={500}
