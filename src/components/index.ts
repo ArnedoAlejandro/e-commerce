@@ -7,6 +7,7 @@ export * from "./product/size-selector/SizeSelector";
 export * from "./product/cuantity-selector/QuantitySelector";
 export * from "./product/stock-label/StockLabel";
 export * from "./product/product-image/ProductImage";
+export * from "./product/search-product/SearchProductByName";
 
 export * from "./ui/footer/Footer";
 export * from "./ui/top-menu/TopMenu";

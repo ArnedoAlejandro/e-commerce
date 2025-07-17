@@ -63,7 +63,11 @@ export default async function OrdersPage({
           </tbody>
         </table>
 
-        <Pagination totalPages={totalPages} />
+        <Pagination
+          totalPages={totalPages}
+          currentPage={page}
+          useLink={true}
+        />
       </div>
     </>
   );

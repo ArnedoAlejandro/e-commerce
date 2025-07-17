@@ -18,7 +18,7 @@ const ProductImage = ( {
     ? src.startsWith("http") 
       ? src 
       : `/products/${src}` 
-    : "/imgs/placeholder.jpg";
+    : "/imgs/placeholder.png";
 
 
 

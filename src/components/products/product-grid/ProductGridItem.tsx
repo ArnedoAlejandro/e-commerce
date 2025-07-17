@@ -27,7 +27,7 @@ const ProductGridItem = ({ product }: Props) => {
               ? displayImage.startsWith("http")
                 ? displayImage
                 : `/products/${displayImage}`
-              : "/imgs/placeholder.jpg"
+              : "/imgs/placeholder.png"
           }
           alt={product.title || ""}
           width={500}

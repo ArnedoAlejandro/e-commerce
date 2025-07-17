@@ -41,7 +41,7 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
               width={1024}
               height={800}
               alt={title}
-              src={`/imgs/placeholder.jpg`}
+              src={`/imgs/placeholder.png`}
               className="rounded-md object-fill"
             />
           </SwiperSlide>
@@ -75,7 +75,7 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
               width={1024}
               height={800}
               alt={title}
-              src={`/imgs/placeholder.jpg`}
+              src={`/imgs/placeholder.png`}
               className="rounded-md object-fill"
             />
           </SwiperSlide>
