@@ -8,22 +8,21 @@ import { IoCardOutline } from "react-icons/io5";
 import { currencyFormat } from '../../../../utils/currencyFormat';
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 const OrderPage = async ({ params }: Props) => {
+  const { id } = await params; // 👈 AWAIT
 
-    const { id } = params
+  const { order, ok } = await getOrderById(id);
 
-    const { order, ok } = await getOrderById(id)
+  if (!ok) {
+    redirect("/");
+  }
 
-    if(!ok){
-      redirect("/")
-    }
-
-    const address = order?.OrderAddress
+  const address = order?.OrderAddress;
 
 
 

@@ -20,7 +20,7 @@ export const TopMenu = () => {
 
 
   return (
-    <nav className="py-2 flex px-5 justify-between items-center w-full">
+    <nav className="bg-white  py-2 flex px-5 justify-between items-center w-full sticky top-0">
       {/* LATERAL IZQUIERDO */}
       <div>
         <Link href="/">
