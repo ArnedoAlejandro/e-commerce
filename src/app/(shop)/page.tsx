@@ -8,30 +8,25 @@ import TitleMenu from "@/components/ui/top-menu/title/TitleMenu";
 
 
 interface Props {
-  searchParams : {
-    page?: string
-  }
+  searchParams: Promise<{
+    page?: string;
+  }>;
 }
 
+export default async function Home({ searchParams }: Props) {
+  const params = await searchParams; // 👈 IMPORTANTE
+  const page = params.page ? parseInt(params.page) : 1;
 
-export default async function  Home({searchParams}:Props) {
+  const { products, totalPage } = await getPaginatedProductWithImages({ page });
 
-  
-  const page = searchParams.page ? parseInt(searchParams.page) : 1
-
-  const {products, totalPage} = await getPaginatedProductWithImages({page})
-  
-  if(products.length === 0 ){
-    redirect("/")
+  if (products.length === 0) {
+    redirect("/");
   }
 
   return (
     <>
-
-      <TitleMenu title="Tienda" subtitle="Todos los productos" className="mb-2"/>
-
+      <TitleMenu title="Tienda" subtitle="Todos los productos" className="mb-2" />
       <ProductGrid products={products} />
-    
       <Pagination totalPages={totalPage} />
     </>
   );

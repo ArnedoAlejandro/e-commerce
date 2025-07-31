@@ -35,6 +35,7 @@ const ProductGridItem = ({ product }: Props) => {
           className="w-full object-cover rounded-md"
           onMouseEnter={() => mouseEnter()}
           onMouseLeave={() => mouseLeave()}
+          priority
         />
       </Link>
 

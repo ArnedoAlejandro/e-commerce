@@ -38,6 +38,7 @@ const ProductMobileSlideshow = ({ images, title, className }: Props) => {
               alt={title}
               src={image.startsWith("http") ? image : `/products/${image}`}
               className=" object-fill "
+              priority
             />
           </SwiperSlide>
         ))}

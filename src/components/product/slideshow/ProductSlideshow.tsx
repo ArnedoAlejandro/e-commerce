@@ -77,6 +77,7 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
               alt={title}
               src={`/imgs/placeholder.png`}
               className="rounded-md object-fill"
+              priority
             />
           </SwiperSlide>
         ) : (
@@ -88,6 +89,7 @@ const ProductSlideshow = ({ images, title, className }: Props) => {
                 alt={title}
                 src={image.startsWith("http") ? image : `/products/${image}`}
                 className="rounded-md object-fill"
+                priority
               />
             </SwiperSlide>
           ))
