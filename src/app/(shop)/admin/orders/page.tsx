@@ -8,21 +8,19 @@ import TitleMenu from "@/components/ui/top-menu/title/TitleMenu";
 import SearchOrderByName from "@/components/orders/SearchOrderByName";
 import Pagination from "@/components/ui/pagination/Pagination";
 
-type SearchParams = { [k: string]: string | string[] | undefined };
 
 export default async function OrdersPage({
   searchParams,
 }: {
-  searchParams?: SearchParams;
+  searchParams?: { [k: string]: string | string[] | undefined };
 }) {
-  // Normalizamos name/page por si vienen como string[]
   const nameRaw = searchParams?.name;
   const name = Array.isArray(nameRaw) ? nameRaw[0] : nameRaw ?? "";
 
   const pageRaw = searchParams?.page;
   const pageStr = Array.isArray(pageRaw) ? pageRaw[0] : pageRaw ?? "1";
   let page = Number.isFinite(Number(pageStr)) ? Number(pageStr) : 1;
-  if (page < 1) page = 1; // opcional: clamp inferior
+  if (page < 1) page = 1;
 
   const { ok, orders = [], totalPages = 1 } = name
     ? await getOrdersByName(name)
