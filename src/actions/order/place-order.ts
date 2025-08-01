@@ -120,10 +120,11 @@ export const placeOrder = async (
       order: prismaTransaction.order,
       prismaTransaction: prismaTransaction,
     };
-  } catch (error: any) {
+  } catch (error) {
+    console.log(error);
     return {
       ok: false,
-      message: error?.message,
+      message: "Error al crear la orden",
     };
   }
 };

@@ -43,13 +43,13 @@ const PlaceOrder = () => {
       size: product.size
     }))
     // Destructuramos la propiedad de rememberAdress para que nos retorne un objeto sin esa propiedad de addres
-    const { rememberAdress, ...addressWithoutRemember } = addres;
+    const {  ...addressWithoutRemember } = addres;
  
     // Ejecutamos la funcion placeOrder para enviar a nuestro servidor la direccion y el pedido 
     const resp = await placeOrder(productToOrder, addressWithoutRemember);
     if(!resp.ok) {
         setIsPlacingOrder(false);
-        setErrorMessage(resp.message);
+        setErrorMessage(resp.message || 'Ocurrio un error inesperado');
         return
       }
 

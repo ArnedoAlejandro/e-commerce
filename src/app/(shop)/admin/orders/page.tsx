@@ -10,9 +10,9 @@ import Pagination from "@/components/ui/pagination/Pagination";
 export default async function OrdersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ name?: string; page?: string }>;
+  searchParams: { name?: string; page?: string };
 }) {
-  const { name = "", page: pageStr = "1" } = await searchParams;
+  const { name = "", page: pageStr = "1" } =  searchParams;
   const page = Number(pageStr);
 
   const { ok, orders = [], totalPages = 1 } = name

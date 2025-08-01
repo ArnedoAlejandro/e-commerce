@@ -11,9 +11,9 @@ import Pagination from "@/components/ui/pagination/Pagination";
 export default async function UsersPage({
   searchParams,
 }: {
-  searchParams: Promise<{ name?: string; page?: string }>;
+  searchParams: { name?: string; page?: string };
 }) {
-  const { name = "", page = "1" } = await searchParams;
+  const { name = "", page = "1" } = searchParams;
   const pageNumber = Number(page);
   const response = name
     ? await getUserByName(name)
