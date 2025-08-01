@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+
 import { IoCardOutline } from "react-icons/io5";
 import { redirect } from "next/navigation";
 import { getPaginatedOrders, getOrdersByName } from "@/actions";
@@ -7,20 +8,27 @@ import TitleMenu from "@/components/ui/top-menu/title/TitleMenu";
 import SearchOrderByName from "@/components/orders/SearchOrderByName";
 import Pagination from "@/components/ui/pagination/Pagination";
 
+type SearchParams = { [k: string]: string | string[] | undefined };
+
 export default async function OrdersPage({
   searchParams,
 }: {
-  searchParams: { name?: string; page?: string };
+  searchParams?: SearchParams;
 }) {
-  const { name = "", page: pageStr = "1" } =  searchParams;
-  const page = Number(pageStr);
+  // Normalizamos name/page por si vienen como string[]
+  const nameRaw = searchParams?.name;
+  const name = Array.isArray(nameRaw) ? nameRaw[0] : nameRaw ?? "";
+
+  const pageRaw = searchParams?.page;
+  const pageStr = Array.isArray(pageRaw) ? pageRaw[0] : pageRaw ?? "1";
+  let page = Number.isFinite(Number(pageStr)) ? Number(pageStr) : 1;
+  if (page < 1) page = 1; // opcional: clamp inferior
 
   const { ok, orders = [], totalPages = 1 } = name
     ? await getOrdersByName(name)
     : await getPaginatedOrders({ page });
 
   if (!ok) redirect("/auth/login");
-
   return (
     <>
       <div className="flex justify-between items-center mt-5">
