@@ -6,16 +6,14 @@ import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Pagination from "@/components/ui/pagination/Pagination";
 import TitleMenu from "@/components/ui/top-menu/title/TitleMenu";
 
-
 interface Props {
-  searchParams: Promise<{
-    page?: string;
-  }>;
+  searchParams?: { page?: string | string[] };
 }
 
 export default async function Home({ searchParams }: Props) {
-  const params = await searchParams; // 👈 IMPORTANTE
-  const page = params.page ? parseInt(params.page) : 1;
+  const raw = searchParams?.page;
+  const pageStr = Array.isArray(raw) ? raw[0] : raw;
+  const page = Number.isFinite(Number(pageStr)) ? Number(pageStr) : 1;
 
   const { products, totalPage } = await getPaginatedProductWithImages({ page });
 
