@@ -99,14 +99,27 @@ export const placeOrder = async (
         },
       });
 
-      const { provinceId, ...restAddress } = address;
-      const orderAddress = await tx.orderAddress.create({
-        data: {
-          ...restAddress,
-          provinceId,
-          orderId: order.id, // ✅ este campo sí existe en OrderAddress
-        },
-      });
+      const {
+        provinceId,
+        rememberAddress, // o rememberAdress si así lo llamaste en el form
+        rememberAdress, // por si está mal tipeado en la UI
+        ...restAddress
+      } = address as any;
+
+      // Guardar la direccion
+      const orderAddress = {
+        firstName: restAddress.firstName,
+        lastName: restAddress.lastName,
+        address: restAddress.address,
+        address2: restAddress.address2 ?? null, // tu schema lo permite opcional
+        city: restAddress.city,
+        postalCode: restAddress.postalCode,
+        phone: restAddress.phone,
+        provinceId, // del objeto address
+        orderId: order.id, // FK obligatoria
+      };
+
+      await tx.orderAddress.create({ data: orderAddress });
 
       return {
         updatedProducts: updatedProducts,
@@ -124,7 +137,7 @@ export const placeOrder = async (
     console.log(error);
     return {
       ok: false,
-      message: "Error al crear la orden",
+      message: "Ocurrio un error",
     };
   }
 };
