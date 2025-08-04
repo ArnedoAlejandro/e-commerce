@@ -13,18 +13,26 @@ import AddtoCard from "./ui/AddtoCard"
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string }; // ✅ NO Promise
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;  // ✅ sin await
   const product = await getProductBySlug(slug);
 
+  const title = product?.title ?? "Producto sin título";
+  const description = product?.description ?? "Descripción del producto";
+
+  // Evita acceso fuera de rango por si no hay imágenes
+  const image = product?.images?.[0]
+    ? `/products/${product.images[0]}`
+    : "/og-default.png"; // poné un fallback que exista
+
   return {
-    title: product?.title ?? "Producto sin título",
-    description: product?.description ?? "Descripción del producto",
+    title,
+    description,
     openGraph: {
-      title: product?.title ?? "Producto sin título",
-      description: product?.description ?? "Descripción del producto",
-      images: [`/products/${product?.images[1]}`],
+      title,
+      description,
+      images: [image],
     },
   };
 }
@@ -32,9 +40,9 @@ export async function generateMetadata({
 export default async function ProductSlug({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };   // ✅ síncrono
 }) {
-  const { slug } = await params;
+  const { slug } = params;    // ✅ sin await
   const product = await getProductBySlug(slug);
 
   if (!product) notFound();
